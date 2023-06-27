@@ -1,0 +1,397 @@
+peca=[]
+cad=[] 
+venda=[]
+listaVendas=[] 
+def MostraMenu():
+  op=0
+  while op<1 or op>8:
+    op=int(input("Digite uma opçao de 1 a 8 "))
+    if op==1:
+      inserePecas()
+    elif op==2:
+      mostraCadastro()
+    elif op==3:
+      removePecas()
+    elif op==4:
+      editaPeca()
+    elif op==5:
+      vendePeca()
+    elif op==6:
+      mostraVenda()
+    elif op==7:
+      salvaCad()
+    elif op==8:
+      lerCad()
+    
+    op=0
+
+
+def inserePecas():
+  print("Insere Peças")
+  print()
+  ok = False
+  while not ok:
+    codigo=int(input("Digite seu Codigo "))
+    nome=input("Digite o nome da peça ")
+    categoria=int(input("Digitar a categoria da peça entre 0 e 20 "))
+    preco=float(input("Digite o preço da peça "))
+    quant=int(input("Digite a quantidade da peça "))
+    print()
+    if codigo<0:
+      print("ERRO codigo nao pode ser negativo ")
+    elif categoria<0 or categoria>20:
+      print("Erro Categoria invalida")
+      ok=True
+      return InserePecas()
+    elif preco<0:
+      print("Erro")
+      ok=True
+      return InserePecas()
+    elif quant<0:
+      print("Erro")
+      ok=True
+      return InserePecas()
+    
+
+    print()
+    peca=[]
+    peca.append(codigo)
+    peca.append(nome)
+    peca.append(categoria)
+    peca.append(preco)
+    peca.append(quant)
+    
+
+    if VerificaPecas(codigo,nome)==True:
+      ok=True
+      cad.append(peca)
+
+    
+ 
+def VerificaPecas(codigo,nome):
+  for p in cad:
+    if p[0]==codigo:
+      print("Erro esse codigo ja existe ")
+      return False 
+    elif p[1]==nome:
+      print("Erro esse nome ja existe ")
+      return False 
+   
+  return True
+
+def IndentificaNome(nome):
+  for h in cad:
+    if h[1]==nome:
+      return True 
+  return False
+
+def IndentificaCategoria(categoria):
+  for i in cad:
+    if i[2]==categoria:
+      return True 
+  return False
+
+def IndentificaCodigo(codigo):
+  for p in cad:
+    if p[0]==codigo:
+      return True 
+  return False
+
+
+
+def mostraCadastro():
+  print("Mostra cadastro")
+  print()
+  opc=int(input("Digite 1 para mostrar todo cadastro ou 2 para mostrar apartir de filtro numerico "))
+  if opc==1:
+   print(cad)
+   
+  elif opc==2:
+   limite=float(input("Digite o limite de preço da peça "))
+   maximo=float(input("Digite o maximo de preço da peça "))
+   for p in cad:
+    if p[3]>=limite and p[3]<=maximo:
+     print(p)
+    print()
+    
+
+def removePecas():
+  print("Remove Peças")
+  print()
+  ok=False
+  while not ok:
+    opc=int(input("Digite como voce quer remover a peça 1 pelo nome, 2 pela categoria ou 3 pelo codigo "))
+    if opc==1:
+      nome=input("Digite o nome da peça ")
+      if IndentificaNome(nome)==True:
+        for c in cad: 
+          c.clear()
+          print(c)
+          print()
+          ok=True
+          
+      else:
+        print("Essa peça nao existe")
+        
+    elif opc==2:
+      categoria=int(input("Digite o categoria da peça "))
+      if IndentificaCategoria(categoria)==True:
+        for c in cad: 
+          c.clear()
+          print(c)
+          print()
+          ok=True 
+          
+      else:
+        print("Essa peça nao existe")
+       
+    elif opc==3:
+      codigo=int(input("Digite o codigo "))
+      if IndentificaCodigo(codigo)==True:
+        for h in cad:
+          h.clear()
+          print(h)
+          print()
+          ok=True
+          
+      else:
+        print("Essa peça nao existe")
+      
+    else:
+      print("Numero invalido ")
+
+
+
+def editaPeca():
+  print("Edita Peça")
+  print() 
+  ok=False
+  while not ok:
+    op=int(input("Digite 1 para alterar a peça apartir do nome da ou 2 para alterar apartir do codigo ")) 
+
+    if op==1: 
+      
+      nome=input("Digite o nome da peça ") 
+      if IndentificaNome(nome)==True: 
+        for n in cad:
+          codigo=int(input("Digite seu Codigo "))
+          nome=input("Digite o nome da peça ")
+          categoria=int(input("Digitar a categoria da peça "))
+          preco=float(input("Digite o preço da peça "))
+          quant=int(input("Digite a quantidade da peça "))
+          if codigo<0:
+            print("ERRO codigo nao pode ser negativo ")
+          elif categoria<0 or categoria>20:
+            print("Erro Categoria invalida")
+            ok=True
+            return EditaPeca()
+          elif preco<0:
+            print("Erro")
+            ok=True
+            return EditaPeca()
+          elif quant<0:
+            print("Erro")
+            ok=True
+            return EditaPeca()
+          n[0]=codigo
+          n[1]=nome
+          n[2]=categoria
+          n[3]=preco
+          n[4]=quant
+          print(n)
+          ok=True
+          print()
+          
+      else: 
+        print("Erro nao existe esse nome ") 
+        print() 
+
+    elif op==2: 
+
+      codigo=int(input("Digite seu Codigo ")) 
+      if IndentificaCodigo(codigo)==True: 
+        for a in cad:
+          codigo=int(input("Digite seu Codigo "))
+          nome=input("Digite o nome da peça ")
+          categoria=int(input("Digitar a categoria da peça "))
+          preco=float(input("Digite o preço da peça "))
+          quant=int(input("Digite a quantidade da peça "))
+
+          if codigo<0:
+            print("ERRO codigo nao pode ser negativo ")
+          elif categoria<0 or categoria>20:
+            print("Erro Categoria invalida")
+            ok=True
+            return EditaPeca()
+          elif preco<0:
+            print("Erro")
+            ok=True
+            return EditaPeca()
+          elif quant<0:
+            print("Erro")
+            ok=True
+            return EditaPeca()
+
+          a[0]=codigo
+          a[1]=nome
+          a[2]=categoria
+          a[3]=preco
+          a[4]=quant
+          print(a)
+          ok=True
+          print()
+
+      else:
+        print("Nao existe esse codigo")
+        print()
+
+
+def vendePeca():
+  print("Vende Peça")
+  print()
+  ok=False
+  while not ok:
+  
+    op=int(input("Digite 1 para vender a peça apartir do nome da ou 2 para vender apartir do codigo ")) 
+    if op==1:
+      nome=input("Digite o nome da Peça ")
+      if IndentificaNome(nome)==True: 
+        
+        quanti=int(input("Digite quantas peças voce quer vender "))
+        for peca in cad:
+          if peca[1]==nome:
+            multi=peca[3]*quanti
+            break
+        multi=quanti*peca[3]
+        venda=[]
+        venda.append(peca[0])
+        venda.append(peca[1])
+        venda.append(quanti)
+        venda.append(multi)
+
+
+        dimi=peca[4]-quanti
+        peca[4]=dimi
+
+        if peca[4]<0:
+          print("Erro estoque negativo ")
+          ok=True
+          break
+          
+            
+        print(peca)
+        ok=True
+        listaVendas.append(venda)
+        print()
+      else:
+        print("Esse Nome nao existe")
+
+
+    if op==2:
+        codigo=int(input("Digite o codigo da peça "))
+        if IndentificaCodigo(codigo)==True:
+          
+          quanti=int(input("Digite quantas peças voce quer vender "))
+          for peca in cad:
+            if peca[0]==codigo:
+              multi=peca[3]*quanti
+              break
+            
+
+          venda=[]
+          venda.append(peca[0])
+          venda.append(peca[1])
+          venda.append(quanti)
+          venda.append(multi)
+            
+
+          dimi=peca[4]-quanti
+          peca[4]=dimi
+
+           
+
+          if peca[4]<0:
+            print("Erro estoque negativo ")
+            ok=True
+            break
+            
+              
+              
+          print(peca)
+          ok=True
+          listaVendas.append(venda)
+          print()
+        else:
+          print("Esse codigo nao existe")
+          print()
+    
+    
+
+def mostraVenda():
+  print("Mostra Venda")
+  print()
+  somatotal=0
+  i=0
+  while i<len(listaVendas):
+    print("Codigo ",listaVendas[i][0])
+    
+    print()
+
+    print("Nome da Peça ",listaVendas[i][1])
+    
+    print()
+
+    print("Quantidade vendida ",listaVendas[i][2])
+    
+    print()
+
+    print("Valor da venda ",listaVendas[i][3])
+    
+    print()
+
+    somatotal+=listaVendas[i][3]
+    i+=1
+    print()
+
+  print("Soma total de todas as vendas ",somatotal)
+
+
+def salvaCad():
+  print("Salva cadastro")
+  print()
+  f = open("cadastroPeça.db", "w")
+  f.write(str(len(cad))+"\n")
+
+  for i in cad:
+    f.write(str(i[0])+"\n")
+    f.write(i[1]+'\n')
+    f.write(str(i[2])+"\n")  
+    f.write(str(i[3])+"\n")
+    f.write(str(i[4])+"\n")
+  f.close()
+
+def lerCad():
+  print("Le cadastro")
+  print()
+  cad.clear()
+  item=[]
+  f = open("cadastroPeça.db", "r")
+  quantItens = int(f.readline())
+  i=0
+  while i < quantItens:
+    item.append(int(f.readline()))
+    nome = f.readline()
+    item.append(nome[:len(nome)-1]) 
+    item.append(int(f.readline()))
+    item.append(float(f.readline()))
+    item.append(int(f.readline()))
+    cad.append(item)
+    item=[]
+    i+=1
+
+  f.close()
+
+  print("lido o cadastro:",cad)
+
+
+MostraMenu()   
